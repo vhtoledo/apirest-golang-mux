@@ -53,8 +53,8 @@ func Ejemplo_post(response http.ResponseWriter, request *http.Request){
 		"estado": "ok",
 		"mensaje": "Metodo POST 2",
 		"nombre": categoria.Nombre,
+		"Authorization": request.Header.Get("Authorization"),
 	}
-	//response.WriteHeader(201)
 	response.WriteHeader(http.StatusCreated)
 	json.NewEncoder(response).Encode(respuesta)
 }
