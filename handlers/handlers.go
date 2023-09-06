@@ -35,14 +35,25 @@ func Ejemplo_get_con_parametros(response http.ResponseWriter, request *http.Requ
 	fmt.Fprintln(response, string(output))
 	
 }
-
+func Ejemplo_post(response http.ResponseWriter, request *http.Request){
+	response.Header().Set("COntent-Type", "application/json")
+	response.Header().Add("victor", "www.victortoledodev.com.ar")
+	respuesta := map[string]string{
+		"estado": "ok",
+		"mensaje": "Metodo POST 2",
+	}
+	//response.WriteHeader(201)
+	response.WriteHeader(http.StatusCreated)
+	json.NewEncoder(response).Encode(respuesta)
+}
+/*
 func Ejemplo_post(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("COntent-Type", "application/json")
 	response.Header().Add("victor", "www.victortoledodev.com.ar")
 	output, _:= json.Marshal(ResponseGnerico{"ok", "Metodo POST"})
 	fmt.Fprintln(response, string(output))
 }
-
+*/
 func Ejemplo_put(response http.ResponseWriter, request *http.Request) {
 	vars:=mux.Vars(request)
 	response.Header().Set("COntent-Type", "application/json")
