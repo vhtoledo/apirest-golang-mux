@@ -11,6 +11,10 @@ func Ejemplo_get(response http.ResponseWriter, request *http.Request) {
 	fmt.Fprintln(response, "hola ejemplo")
 }
 
+func Ejemplo_get_querystring(response http.ResponseWriter, request *http.Request) {
+	fmt.Fprintln(response, "query string | id="+request.URL.Query().Get("id"))
+}
+
 func Ejemplo_get_con_parametros(response http.ResponseWriter, request *http.Request) {
 	vars:=mux.Vars(request)
 	fmt.Fprintln(response, "hola ejemplo con parametros | id ="+vars["id"])

@@ -17,6 +17,7 @@ func main () {
 	mux.HandleFunc(prefijo+"ejemplo", handlers.Ejemplo_post).Methods("POST")
 	mux.HandleFunc(prefijo+"ejemplo/{id:[0-9]+", handlers.Ejemplo_put).Methods("PUT")
 	mux.HandleFunc(prefijo+"ejemplo/{id:[0-9]+", handlers.Ejemplo_delete).Methods("DELETE")
+	mux.HandleFunc(prefijo+"query-string", handlers.Ejemplo_get_querystring).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
