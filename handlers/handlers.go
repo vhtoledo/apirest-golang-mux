@@ -4,7 +4,11 @@ import (
 	"encoding/json"
 	"fmt"
 	"golang-mux-apirest/dto"
+	"io"
 	"net/http"
+	"os"
+	"strings"
+	"time"
 
 	"github.com/gorilla/mux"
 )
@@ -93,4 +97,29 @@ func Ejemplo_delete(response http.ResponseWriter, request *http.Request) {
 	response.Header().Add("victor", "www.victortoledodev.com.ar")
 	output, _:= json.Marshal(ResponseGnerico{"ok", "Metodo DELETE | id =" + vars["id"]})
 	fmt.Fprintln(response, string(output))
+}
+func Ejemplo_upload(response http.ResponseWriter, request *http.Request) {
+	file, handler, _ := request.FormFile("foto")
+	var extension = strings.Split(handler.Filename, ".")[1]
+	time := strings.Split(time.Now().String(), " ")
+	foto := string(time[4][6:14]) + "." + extension
+	var archivo string = "public/uploads/fotos/" + foto
+	f, err := os.OpenFile(archivo, os.O_WRONLY|os.O_CREATE, 0777)
+	if err != nil {
+		http.Error(response, "Error al subir la imagen ! "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	_, err = io.Copy(f, file)
+	if err != nil {
+		http.Error(response, "Error al copiar la imagen ! "+err.Error(), http.StatusBadRequest)
+		return
+	}
+	respuesta := map[string]string{
+		"estado":  "ok",
+		"mensaje": "Se creó el archivo exitosamente",
+		"foto":    foto,
+	}
+	response.Header().Set("Content-Type", "application/json")
+	response.WriteHeader(http.StatusCreated)
+	json.NewEncoder(response).Encode(respuesta)
 }
