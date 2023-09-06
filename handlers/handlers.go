@@ -40,24 +40,25 @@ func Ejemplo_get_con_parametros(response http.ResponseWriter, request *http.Requ
 	fmt.Fprintln(response, string(output))
 	
 }
-func Ejemplo_post(response http.ResponseWriter, request *http.Request){
-	response.Header().Set("COntent-Type", "application/json")
+func Ejemplo_post(response http.ResponseWriter, request *http.Request) {
+	response.Header().Add("content-type", "application/json")
 	var categoria dto.CategoriaDto
 	err := json.NewDecoder(request.Body).Decode(&categoria)
 	if err != nil {
 		respuesta := map[string]string{
-			"estado": "error",
-			"mensaje": "Ocurrio un error inesperado",
+			"estado":  "error",
+			"mensaje": "Ocurrió un error inesperado",
 		}
 		response.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(response).Encode(respuesta)
 		return
 	}
 	respuesta := map[string]string{
-		"estado": "ok",
-		"mensaje": "Metodo POST 2",
-		"nombre": categoria.Nombre,
+		"estado":        "ok",
+		"mensaje":       "Método POST 2",
+		"nombre":        categoria.Nombre,
 		"Authorization": request.Header.Get("Authorization"),
+		"otracosa":      request.Header.Get("otracosa"),
 	}
 	response.WriteHeader(http.StatusCreated)
 	json.NewEncoder(response).Encode(respuesta)
@@ -122,4 +123,30 @@ func Ejemplo_upload(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("Content-Type", "application/json")
 	response.WriteHeader(http.StatusCreated)
 	json.NewEncoder(response).Encode(respuesta)
+}
+func EjemploVerFoto(response http.ResponseWriter, request *http.Request) {
+	file := request.URL.Query().Get("file")
+	if len(file) < 1 {
+		respuesta := map[string]string{
+			"estado":  "error",
+			"mensaje": "Ocurrió un error inesperado",
+		}
+		response.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(response).Encode(respuesta)
+		return
+	}
+	OpenFile, err := os.Open("public/uploads/" + request.URL.Query().Get("folder") + "/" + file)
+	if err != nil {
+		respuesta := map[string]string{
+			"estado":  "error",
+			"mensaje": "Ocurrió un error inesperado",
+		}
+		response.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(response).Encode(respuesta)
+		return
+	}
+	_, err = io.Copy(response, OpenFile)
+	if err != nil {
+		http.Error(response, "Error al copiar el archivo", http.StatusBadRequest)
+	}
 }

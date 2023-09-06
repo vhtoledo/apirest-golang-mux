@@ -19,6 +19,7 @@ func main () {
 	mux.HandleFunc(prefijo+"ejemplo/{id:[0-9]+", handlers.Ejemplo_delete).Methods("DELETE")
 	mux.HandleFunc(prefijo+"query-string", handlers.Ejemplo_get_querystring).Methods("GET")
 	mux.HandleFunc(prefijo+"upload", handlers.Ejemplo_upload).Methods("POST")
+	mux.HandleFunc(prefijo+"archivo", handlers.EjemploVerFoto).Methods("GET")
 
 	log.Fatal(http.ListenAndServe(":8080", mux))
 }
