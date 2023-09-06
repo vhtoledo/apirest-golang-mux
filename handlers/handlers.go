@@ -3,6 +3,8 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
 func Ejemplo_get(response http.ResponseWriter, request *http.Request) {
@@ -10,7 +12,8 @@ func Ejemplo_get(response http.ResponseWriter, request *http.Request) {
 }
 
 func Ejemplo_get_con_parametros(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(response, "hola ejemplo con parametros")
+	vars:=mux.Vars(request)
+	fmt.Fprintln(response, "hola ejemplo con parametros | id ="+vars["id"])
 }
 
 func Ejemplo_post(response http.ResponseWriter, request *http.Request) {
@@ -18,9 +21,11 @@ func Ejemplo_post(response http.ResponseWriter, request *http.Request) {
 }
 
 func Ejemplo_put(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(response, "Metodo put")
+	vars:=mux.Vars(request)
+	fmt.Fprintln(response, "Metodo put | id ="+vars["id"])
 }
 
 func Ejemplo_delete(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(response, "Metodo delete")
+	vars:=mux.Vars(request)
+	fmt.Fprintln(response, "Metodo delete | id ="+vars["id"])
 }
