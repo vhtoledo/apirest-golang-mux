@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"fmt"
+	"golang-mux-apirest/dto"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -37,6 +38,29 @@ func Ejemplo_get_con_parametros(response http.ResponseWriter, request *http.Requ
 }
 func Ejemplo_post(response http.ResponseWriter, request *http.Request){
 	response.Header().Set("COntent-Type", "application/json")
+	var categoria dto.CategoriaDto
+	err := json.NewDecoder(request.Body).Decode(&categoria)
+	if err != nil {
+		respuesta := map[string]string{
+			"estado": "error",
+			"mensaje": "Ocurrio un error inesperado",
+		}
+		response.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(response).Encode(respuesta)
+		return
+	}
+	respuesta := map[string]string{
+		"estado": "ok",
+		"mensaje": "Metodo POST 2",
+		"nombre": categoria.Nombre,
+	}
+	//response.WriteHeader(201)
+	response.WriteHeader(http.StatusCreated)
+	json.NewEncoder(response).Encode(respuesta)
+}
+/*
+func Ejemplo_post(response http.ResponseWriter, request *http.Request){
+	response.Header().Set("COntent-Type", "application/json")
 	response.Header().Add("victor", "www.victortoledodev.com.ar")
 	respuesta := map[string]string{
 		"estado": "ok",
@@ -46,6 +70,7 @@ func Ejemplo_post(response http.ResponseWriter, request *http.Request){
 	response.WriteHeader(http.StatusCreated)
 	json.NewEncoder(response).Encode(respuesta)
 }
+*/
 /*
 func Ejemplo_post(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("COntent-Type", "application/json")
