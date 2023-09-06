@@ -1,14 +1,20 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
 )
-
+type ResponseGnerico struct{
+	Estado string
+	Mensaje string
+}
 func Ejemplo_get(response http.ResponseWriter, request *http.Request) {
-	fmt.Fprintln(response, "hola ejemplo")
+	
+	output, _:= json.Marshal(ResponseGnerico{"ok", "Metodo GET"})
+	fmt.Fprintln(response, string(output))
 }
 
 func Ejemplo_get_querystring(response http.ResponseWriter, request *http.Request) {
