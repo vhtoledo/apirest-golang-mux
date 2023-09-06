@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 func main () {
@@ -21,5 +22,8 @@ func main () {
 	mux.HandleFunc(prefijo+"upload", handlers.Ejemplo_upload).Methods("POST")
 	mux.HandleFunc(prefijo+"archivo", handlers.EjemploVerFoto).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":8080", mux))
+	//cors
+	handler := cors.AllowAll().Handler(mux)
+	//log.Fatal(http.ListenAndServe(":8080", mux))
+	log.Fatal(http.ListenAndServe(":8080", handler))
 }
