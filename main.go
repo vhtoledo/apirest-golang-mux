@@ -2,7 +2,7 @@ package main
 
 import (
 	"golang-mux-apirest/handlers"
-	"golang-mux-apirest/modelos"
+	//"golang-mux-apirest/modelos"
 	"log"
 	"net/http"
 
@@ -25,6 +25,12 @@ func main () {
 	mux.HandleFunc(prefijo+"query-string", handlers.Ejemplo_get_querystring).Methods("GET")
 	mux.HandleFunc(prefijo+"upload", handlers.Ejemplo_upload).Methods("POST")
 	mux.HandleFunc(prefijo+"archivo", handlers.EjemploVerFoto).Methods("GET")
+
+	mux.HandleFunc(prefijo+"categorias", handlers.Categoria_get).Methods("GET")
+	mux.HandleFunc(prefijo+"categorias/{id:[0-9]+}", handlers.Categoria_get_con_parametro).Methods("GET")
+	mux.HandleFunc(prefijo+"categorias", handlers.Categoria_post).Methods("POST")
+	mux.HandleFunc(prefijo+"categorias/{id:[0-9]+}", handlers.Categoria_put).Methods("PUT")
+	mux.HandleFunc(prefijo+"categorias/{id:[0-9]+}", handlers.Categoria_delete).Methods("DELETE")
 
 	//cors
 	handler := cors.AllowAll().Handler(mux)
