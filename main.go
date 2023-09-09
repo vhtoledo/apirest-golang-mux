@@ -2,6 +2,7 @@ package main
 
 import (
 	"golang-mux-apirest/handlers"
+	"golang-mux-apirest/middleware"
 	//"golang-mux-apirest/modelos"
 	"log"
 	"net/http"
