@@ -32,6 +32,12 @@ func main () {
 	mux.HandleFunc(prefijo+"categorias/{id:[0-9]+}", handlers.Categoria_put).Methods("PUT")
 	mux.HandleFunc(prefijo+"categorias/{id:[0-9]+}", handlers.Categoria_delete).Methods("DELETE")
 
+	mux.HandleFunc(prefijo+"productos", handlers.Productos_get).Methods("GET")
+	mux.HandleFunc(prefijo+"productos/{id:[0-9]+}", handlers.Productos_get_con_parametro).Methods("GET")
+	mux.HandleFunc(prefijo+"productos", handlers.Productos_post).Methods("POST")
+	mux.HandleFunc(prefijo+"productos/{id:[0-9]+}", handlers.Productos_put).Methods("PUT")
+	mux.HandleFunc(prefijo+"productos/{id:[0-9]+}", handlers.Productos_delete).Methods("DELETE")
+
 	//cors
 	handler := cors.AllowAll().Handler(mux)
 	//log.Fatal(http.ListenAndServe(":8080", mux))
