@@ -38,6 +38,10 @@ func main () {
 	mux.HandleFunc(prefijo+"productos/{id:[0-9]+}", handlers.Productos_put).Methods("PUT")
 	mux.HandleFunc(prefijo+"productos/{id:[0-9]+}", handlers.Productos_delete).Methods("DELETE")
 
+	mux.HandleFunc(prefijo+"productos-fotos/{id:[0-9]+}", handlers.ProductosFotosUpload).Methods("POST")
+	mux.HandleFunc(prefijo+"productos-fotos/{id:[0-9]+}", handlers.ProductosFotos_get_por_producto).Methods("GET")
+	mux.HandleFunc(prefijo+"productos-fotos/{id:[0-9]+}", handlers.ProductosFotosDelete).Methods("DELETE")
+
 	//cors
 	handler := cors.AllowAll().Handler(mux)
 	//log.Fatal(http.ListenAndServe(":8080", mux))
