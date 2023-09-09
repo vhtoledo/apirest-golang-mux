@@ -13,8 +13,8 @@ import (
 	"github.com/gorilla/mux"
 )
 type ResponseGnerico struct{
-	Estado string
-	Mensaje string
+	Estado string  `json:"estado"`
+	Mensaje string `json:"mensaje"`
 }
 func Ejemplo_get(response http.ResponseWriter, request *http.Request) {
 	

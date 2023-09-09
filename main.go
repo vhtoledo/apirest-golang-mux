@@ -2,6 +2,7 @@ package main
 
 import (
 	"golang-mux-apirest/handlers"
+	"golang-mux-apirest/modelos"
 	"log"
 	"net/http"
 
@@ -10,6 +11,9 @@ import (
 )
 
 func main () {
+	//mirar la bd
+	//modelos.Migraciones()
+
 	mux := mux.NewRouter()
 	prefijo := "/api/v1"
 	// rutas
